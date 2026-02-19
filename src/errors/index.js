@@ -1,13 +1,29 @@
 'use strict'
 
 class BaseError extends Error {
-  constructor (message) {
+  constructor (message, data) {
     super(message)
 
     this.name = this.constructor.name
     this.message = message
 
     Error.captureStackTrace(this, this.constructor)
+
+    if (!data) {
+      return
+    }
+
+    this.data = data
+    let dataStr = ''
+
+    try {
+      const json = JSON.stringify(this.data, null, 2)
+        .replaceAll('\n', '\n    ')
+
+      dataStr = `\n    data: ${json}`
+
+      this.stack = `${this.stack}${dataStr}`
+    } catch (err) {}
   }
 }
 
@@ -119,6 +135,21 @@ class ThemeParamPassingError extends BaseError {
   }
 }
 
+class DataValidationSchemaDefError extends BaseError {
+  constructor (message = 'ERR_DATA_VALIDATION_SCHEMA_IS_UNDEFINED') {
+    super(message)
+  }
+}
+
+class DataValidationError extends BaseError {
+  constructor (args) {
+    super(
+      args?.message ?? 'ERR_DATA_IS_INVALID',
+      args?.data
+    )
+  }
+}
+
 module.exports = {
   BaseError,
   InvalidFilePathError,
@@ -138,5 +169,7 @@ module.exports = {
   DbRestoringError,
   ShowingChangelogError,
   TriggeringSyncAfterUpdatesError,
-  ThemeParamPassingError
+  ThemeParamPassingError,
+  DataValidationError,
+  DataValidationSchemaDefError
 }
