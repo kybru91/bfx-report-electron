@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.41.1] - 2026-02-25
+
+### Changed
+
+- Updated `clean-stack` module to have the latest fixes for electron app and improved stack cleaning to bring more useful info to the debugging flow. PR: [bfx-report-electron#592](https://github.com/bitfinexcom/bfx-report-electron/pull/592)
+- Reworked the config keeper module, which manadge json config files on the user pc to have validation on the loading and saving stages to keep a strict data structure and avoid unexpected behavior due to wrong values. If not valid, reset to the defaults. Also added `createdAt` and `updatedAt` timestamps for easier debugging. Additionally, redundant undeclared fields in json schema will be removed on the loading stage. PR: [bfx-report-electron#595](https://github.com/bitfinexcom/bfx-report-electron/pull/595)
+
+### Fixed
+
+- Fixed `authToken` actualization in the URL (without page refreshing). PR: [bfx-report-ui#1030](https://github.com/bitfinexcom/bfx-report-ui/pull/1030)
+- Fixed number formatter utils with `bignumber.js` for better values precision. PR: [bfx-report-ui#1033](https://github.com/bitfinexcom/bfx-report-ui/pull/1033)
+- Prevented the `Account Summary`  page from crashing in some corner cases when we receive an unexpected payload format. PR: [bfx-report-ui#1039](https://github.com/bitfinexcom/bfx-report-ui/pull/1039)
+- Fixed high-severity vulnerability related to `electron-builder`. PR: [bfx-report-electron#593](https://github.com/bitfinexcom/bfx-report-electron/pull/593)
+
+### Security
+
+- Updated dependencies to fix `high` vulnerability. PR: [bfx-report-ui#1034](https://github.com/bitfinexcom/bfx-report-ui/pull/1034)
+
 ## [4.41.0] - 2026-02-04
 
 ### Added
